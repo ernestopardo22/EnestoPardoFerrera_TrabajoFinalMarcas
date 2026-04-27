@@ -1,0 +1,15 @@
+{
+  "name": "enestopardoferrera_trabajofinalmarcas",
+  "version": "1.0.0",
+  "description": "Trabajo Final De Marcas",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
