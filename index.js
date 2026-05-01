@@ -152,3 +152,50 @@ let origen_recetas = [
       "autoctono": false
     }
   ]
+
+  /*
+  Operaciones básicas sobre el recurso principal
+  */
+app.get("/recetas", (req,res) => {
+  return res.json(recetas);
+})  
+
+app.get("/recetas/:id", (req,res) => {
+  const receta = receta.find(r => r.id == req.params.id);
+  return res.json(alumno);
+})
+
+app.post("/guardar-receta", (req,res) =>{
+    let nuevaReceta = {
+        id: recetas.length+1,
+        nombre: req.body.nombre,
+        descripcion: req.body.descripcion,
+        dificultad: req.body.dificultad,
+        tiempo: req.body.tiempo,
+        raciones: req.body.raciones,
+        ingredientes: req.body.ingredientes,
+        pasos: req.body.pasos
+    }
+
+    recetas.push(nuevaReceta);
+    return res.status(200).json(nuevaReceta)
+} )
+
+app.put("/actualizar-receta", (req,res) => {
+    
+    recetas[req.body.id-1].nombre = req.body.nombre;
+    recetas[req.body.id-1].descripcion = req.body.descripcion;
+    recetas[req.body.id-1].dificultad = req.body.dificultad;
+    recetas[req.body.id-1].tiempo = req.body.tiempo;
+    recetas[req.body.id-1].raciones = req.body.raciones;
+    recetas[req.body.id-1].ingredientes = req.body.ingredientes;
+    recetas[req.body.id-1].pasos = req.body.pasos;
+
+    return res.json(recetas[req.body.id-1])
+})
+
+app.delete("/borrar-receta", (req,res) => {
+    const index = recetas.findIndex(a => a.id == req.body.id)
+    recetas.splice(index, 1)
+    return res.send("Receta con id " + req.body.id + " eliminada.")
+})
