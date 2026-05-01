@@ -162,7 +162,7 @@ app.get("/recetas", (req,res) => {
 
 app.get("/recetas/:id", (req,res) => {
   const receta = receta.find(r => r.id == req.params.id);
-  return res.json(alumno);
+  return res.json(receta);
 })
 
 app.post("/guardar-receta", (req,res) =>{
@@ -176,7 +176,6 @@ app.post("/guardar-receta", (req,res) =>{
         ingredientes: req.body.ingredientes,
         pasos: req.body.pasos
     }
-
     recetas.push(nuevaReceta);
     return res.status(200).json(nuevaReceta)
 } )
@@ -199,3 +198,35 @@ app.delete("/borrar-receta", (req,res) => {
     recetas.splice(index, 1)
     return res.send("Receta con id " + req.body.id + " eliminada.")
 })
+
+
+/*
+Operaciones sobre el recurso secundario
+*/
+app.get("/origen_recetas", (req,res) => {
+  return res.json(origen_recetas);
+})  
+
+//Probar
+app.get("/origen_recetas/:id", (req,res) => {
+  const receta = receta.find(r => r.id == req.params.id);
+  const recetasec = origen_recetas.find(r => r.id == receta.id);
+  return res.json(recetasec);
+})
+
+app.post("/guardar-origen_receta", (req,res) =>{
+    let nuevoOrigenReceta = {
+        id: recetas.length+1,
+        autoctono: req.body.origen_recetas
+    }
+    origen_recetas.push(nuevoOrigenReceta);
+    return res.status(200).json(nuevoOrigenReceta)
+} )
+
+app.delete("/borrar-origen-receta", (req,res) => {
+    const index = origen_recetas.findIndex(a => a.id == req.body.id)
+    origen_recetas.splice(index, 1)
+    return res.send("Origen de receta con id " + req.body.id + " eliminada.")
+})
+
+
