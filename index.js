@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 1111;
+const port = 5008;
 
 app.use(express.json());
 app.listen(port, () => 
@@ -9,7 +9,7 @@ app.listen(port, () =>
 
 let recetas = [
     {
-      "id": "rec_001",
+      "id": "1",
       "nombre": "Tortilla de Patatas",
       "descripcion": "Tortilla española jugosa con cebolla caramelizada",
       "dificultad": "media",
@@ -19,7 +19,7 @@ let recetas = [
       "pasos": ["Pelar y cortar patatas en láminas", "Freír patatas y cebolla a fuego medio", "Batir huevos y mezclar con las patatas escurridas", "Cuajar la mezcla en la sartén", "Dar la vuelta con un plato y terminar de cuajar"]
     },
     {
-      "id": "rec_002",
+      "id": "2",
       "nombre": "Paella Valenciana",
       "descripcion": "Arroz caldoso con pollo, conejo y verduras",
       "dificultad": "difícil",
@@ -29,7 +29,7 @@ let recetas = [
       "pasos": ["Sofreír el pollo y conejo hasta dorar", "Añadir verduras y rehogar", "Incorporar el tomate rallado", "Añadir el arroz y rehogar 2 minutos", "Verter el caldo caliente y cocinar 20 minutos", "Reposar 5 minutos antes de servir"]
     },
     {
-      "id": "rec_003",
+      "id": "3",
       "nombre": "Gazpacho Andaluz",
       "descripcion": "Sopa fría de tomate ideal para verano",
       "dificultad": "fácil",
@@ -39,7 +39,7 @@ let recetas = [
       "pasos": ["Lavar y trocear todas las verduras", "Remojar el pan en agua", "Triturar todo junto en una batidora", "Añadir aceite y vinagre al gusto", "Emulsionar bien", "Enfriar en nevera al menos 2 horas"]
     },
     {
-      "id": "rec_004",
+      "id": "4",
       "nombre": "Brownie de Chocolate",
       "descripcion": "Bizcocho de chocolate crujiente por fuera y tierno por dentro",
       "dificultad": "media",
@@ -49,7 +49,7 @@ let recetas = [
       "pasos": ["Derretir chocolate y mantequilla al baño maría", "Batir huevos con azúcar hasta blanquear", "Mezclar el chocolate derretido con los huevos", "Incorporar harina tamizada y nueces", "Hornear a 180°C durante 25-30 minutos"]
     },
     {
-      "id": "rec_005",
+      "id": "5",
       "nombre": "Lentejas con Chorizo",
       "descripcion": "Plato de cuchara tradicional español",
       "dificultad": "media",
@@ -59,7 +59,7 @@ let recetas = [
       "pasos": ["Poner lentejas en remojo la noche anterior", "Sofreír verduras picadas", "Añadir el chorizo y rehogar", "Incorporar las lentejas y cubrir con agua", "Añadir laurel y pimentón", "Cocer 45 minutos hasta que estén tiernas"]
     },
     {
-      "id": "rec_006",
+      "id": "6",
       "nombre": "Ensalada César",
       "descripcion": "Ensalada fresca con pollo crujiente y salsa César",
       "dificultad": "fácil",
@@ -69,7 +69,7 @@ let recetas = [
       "pasos": ["Lavar y trocear la lechuga", "Cocinar el pollo a la plancha y cortar en tiras", "Preparar la salsa César emulsionando los ingredientes", "Mezclar todo en un bol grande", "Añadir queso parmesano rallado por encima"]
     },
     {
-      "id": "rec_007",
+      "id": "7",
       "nombre": "Crema de Calabaza",
       "descripcion": "Crema suave y reconfortante de calabaza asada",
       "dificultad": "fácil",
@@ -79,7 +79,7 @@ let recetas = [
       "pasos": ["Sofreír la cebolla y el puerro", "Añadir la calabaza, patata y zanahoria troceadas", "Cubrir con caldo de verduras", "Cocer 20 minutos", "Triturar hasta obtener textura cremosa", "Añadir nata y mezclar"]
     },
     {
-      "id": "rec_008",
+      "id": "8",
       "nombre": "Mousse de Limón",
       "descripcion": "Postre ligero y refrescante con textura aireada",
       "dificultad": "media",
@@ -89,7 +89,7 @@ let recetas = [
       "pasos": ["Exprimir el zumo de los limones", "Calentar zumo con azúcar hasta disolver", "Montar la nata bien fría", "Mezclar con el zumo y los huevos temperados", "Añadir gelatina disuelta", "Repartir en vasitos y enfriar 3 horas"]
     },
     {
-      "id": "rec_009",
+      "id": "9",
       "nombre": "Pasta Carbonara",
       "descripcion": "Pasta italiana con salsa cremosa de huevo y queso",
       "dificultad": "media",
@@ -99,7 +99,7 @@ let recetas = [
       "pasos": ["Cocer la pasta en agua con sal", "Mientras, dorar la panceta en sartén", "Batir los huevos con los quesos rallados", "Escurrir la pasta y mezclar con la panceta", "Añadir la mezcla de huevo fuera del fuego", "Remover rápido para que emulsione"]
     },
     {
-      "id": "rec_010",
+      "id": "10",
       "nombre": "Tarta de Queso",
       "descripcion": "Tarta de queso cremosa estilo La Viña",
       "dificultad": "media",
@@ -112,43 +112,43 @@ let recetas = [
 
 let origen_recetas = [
     {
-      "id": "rec_001",
+      "id": "1",
       "autoctono": true
     },
     {
-      "id": "rec_002",
+      "id": "2",
       "autoctono": true
     },
     {
-      "id": "rec_003",
+      "id": "3",
       "autoctono": true
     },
     {
-      "id": "rec_004",
+      "id": "4",
       "autoctono": false
     },
     {
-      "id": "rec_005",
+      "id": "5",
       "autoctono": true
     },
     {
-      "id": "rec_006",
+      "id": "6",
       "autoctono": false
     },
     {
-      "id": "rec_007",
+      "id": "7",
       "autoctono": false
     },
     {
-      "id": "rec_008",
+      "id": "8",
       "autoctono": false
     },
     {
-      "id": "rec_009",
+      "id": "9",
       "autoctono": false
     },
     {
-      "id": "rec_010",
+      "id": "10",
       "autoctono": false
     }
   ]
@@ -161,7 +161,7 @@ app.get("/recetas", (req,res) => {
 })  
 
 app.get("/recetas/:id", (req,res) => {
-  const receta = receta.find(r => r.id == req.params.id);
+  const receta = recetas.find(r => r.id == req.params.id);
   return res.json(receta);
 })
 
@@ -181,7 +181,6 @@ app.post("/guardar-receta", (req,res) =>{
 } )
 
 app.put("/actualizar-receta", (req,res) => {
-    
     recetas[req.body.id-1].nombre = req.body.nombre;
     recetas[req.body.id-1].descripcion = req.body.descripcion;
     recetas[req.body.id-1].dificultad = req.body.dificultad;
@@ -207,17 +206,15 @@ app.get("/origen_recetas", (req,res) => {
   return res.json(origen_recetas);
 })  
 
-//Probar
 app.get("/origen_recetas/:id", (req,res) => {
-  const receta = receta.find(r => r.id == req.params.id);
-  const recetasec = origen_recetas.find(r => r.id == receta.id);
+  const recetasec = origen_recetas.find(r => r.id == req.params.id);
   return res.json(recetasec);
 })
 
-app.post("/guardar-origen_receta", (req,res) =>{
+app.post("/guardar-origen-receta", (req,res) =>{
     let nuevoOrigenReceta = {
-        id: recetas.length+1,
-        autoctono: req.body.origen_recetas
+        id: origen_recetas.length+1,
+        autoctono: req.body.autoctono
     }
     origen_recetas.push(nuevoOrigenReceta);
     return res.status(200).json(nuevoOrigenReceta)
