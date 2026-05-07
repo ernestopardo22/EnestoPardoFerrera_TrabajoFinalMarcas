@@ -335,3 +335,99 @@ app.get('/recetas/ordenar/:campo', (req, res) => {
         res.status(500).json({ error: "Error al ordenar las recetas" });
     }
 });
+
+/*
+Endpoints de estadística y utilidades
+*/ 
+
+//Calcular tiempo medio, máximo y mínimo
+app.get('/recetas/estadisticas/tiempos', (req, res) => {
+    try {
+        if (recetas.length === 0) {
+            return res.status(404).json({ error: "No hay recetas registradas" });
+        }
+        
+        const tiempos = recetas.map(c => c.tiempo);
+        const tiempoMedio = tiempos.reduce((a, b) => a + b, 0) / tiempos.length;
+        const tiempoMaximo = Math.max(...tiempos);
+        const tiempoMinimo = Math.min(...tiempos);
+        
+        res.status(200).json({
+            total_recetas: recetas.length,
+            tiempo_medio: tiempoMedio.toFixed(2),
+            tiempo_maximo: tiempoMaximo,
+            tiempo_minimo: tiempoMinimo
+        });
+    } catch (error) {
+        res.status(500).json({ error: "Error al calcular estadísticas" });
+    }
+});
+
+//Obtener las N recetas con más raciones o menos raciones de la misma dificultad
+app.get('/recetas/top/:cantidad', (req, res) => {
+    try {
+        const cantidad = req.params.cantidad; // 'caros' o 'baratos'
+        const n = parseInt(req.query.n) || 3;
+        
+        if (!['contundentes', 'escasos'].includes(cantidad)) {
+            return res.status(400).json({ 
+                error: "Tipo inválido",
+                tiposValidos: ['contundentes', 'escasos']
+            });
+        }
+        
+        const ordenados = [...recetas].sort((a, b) => 
+            cantidad === 'contundentes' ? b.raciones - a.raciones : a.raciones - b.raciones
+        );
+        
+        const top = ordenados.slice(0, n);
+        
+        res.status(200).json({
+            cantidad: `Top ${n} más ${cantidad}`,
+            total: top.length,
+            recetas: top
+        });
+    } catch (error) {
+        res.status(500).json({ error: "Error al obtener top recetas" });
+    }
+});
+
+//Obtener total de registros
+app.get('/estadisticas/totales', (req, res) => {
+    try {
+        res.status(200).json({
+            total_recetas: recetas.length,
+            total_origen_recetas: origen_recetas.length,
+            recetas_autoctonas: origen_recetas.filter(c => c.autoctono).length,
+            recetas_no_autoctonas: origen_recetas.filter(c => !c.autoctono).length
+        });
+    } catch (error) {
+        res.status(500).json({ error: "Error al obtener totales" });
+    }
+});
+
+//Agrupar recetas por dificultad
+app.get('/recetas/agrupar/dificultad', (req, res) => {
+    try {
+        const agrupados = recetas.reduce((acc, receta) => {
+            if (!acc[receta.dificultad]) {
+                acc[receta.dificultad] = [];
+            }
+            acc[receta.dificultad].push(receta);
+            return acc;
+        }, {});
+        
+        const resultado = Object.keys(agrupados).map(dificultad => ({
+            dificultad: dificultad,
+            cantidad: agrupados[dificultad].length,
+            recetas: agrupados[dificultad]
+        }));
+        
+        res.status(200).json({
+            total_dificultades: resultado.length,
+            agrupacion: resultado
+        });
+    } catch (error) {
+        res.status(500).json({ error: "Error al agrupar recetas" });
+    }
+});
