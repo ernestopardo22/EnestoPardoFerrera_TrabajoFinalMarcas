@@ -4,7 +4,7 @@ const port = 5008;
 
 app.use(express.json());
 app.listen(port, () => 
-    console.log("Servidor abierto por fin!")
+    console.log("Servidor de Ernesto abierto")
 )
 
 let recetas = [
@@ -226,4 +226,112 @@ app.delete("/borrar-origen-receta", (req,res) => {
     return res.send("Origen de receta con id " + req.body.id + " eliminada.")
 })
 
+/*
+Búsquedas y filtros
+*/
 
+//Filtrar por dificultad (búsqueda parcial)
+app.get("/recetas/filtrar/dificultad", (req, res) => {
+    try {
+        const dificultad = req.query.dificultad;
+        
+        if (!dificultad) {
+            return res.status(400).json({ error: "Debe proporcionar una dificultad de receta" });
+        }
+        
+        const resultados = recetas.filter(c => 
+            c.dificultad.toLowerCase().includes(dificultad.toLowerCase())
+        );
+        
+        res.status(200).json({
+            total: resultados.length,
+            recetas: resultados
+        });
+    } catch (error) {
+        res.status(500).json({ error: "Error al filtrar recetas" });
+    }
+});
+
+//Filtrar por tiempo (min y/o max)
+app.get('/recetas/filtrar/tiempo', (req, res) => {
+    try {
+        const min = req.query.min ? parseFloat(req.query.min) : 0;
+        const max = req.query.max ? parseFloat(req.query.max) : Infinity;
+        
+        const resultados = recetas.filter(c => c.tiempo >= min && c.tiempo <= max);
+        
+        res.status(200).json({
+            filtro: `tiempo entre ${min} y ${max}`,
+            total: resultados.length,
+            recetas: resultados
+        });
+    } catch (error) {
+        res.status(500).json({ error: "Error al filtrar por tiempo" });
+    }
+});
+
+//Filtrar por múltiples campos simultáneamente
+app.get('/recetas/busqueda/avanzada', (req, res) => {
+    try {
+        let resultados = [...recetas];
+        
+        // Filtrar por nombre
+        if (req.query.nombre) {
+            resultados = resultados.filter(c => 
+                c.nombre.toLowerCase().includes(req.query.nombre.toLowerCase())
+            );
+        }
+        
+        // Filtrar por raciones
+        if (req.query.racionesMinimas) {
+            const racionesMinimas = parseInt(req.query.racionesMinimas);
+            resultados = resultados.filter(c => c.raciones >= racionesMinimas);
+        }
+        
+        // Filtrar por tamaño
+        if (req.query.dificultad) {
+            resultados = resultados.filter(c => 
+                c.dificultad.toLowerCase() === req.query.dificultad.toLowerCase()
+            );
+        }
+        
+        res.status(200).json({
+            filtros_aplicados: req.query,
+            total: resultados.length,
+            recetas: resultados
+        });
+    } catch (error) {
+        res.status(500).json({ error: "Error en búsqueda avanzada" });
+    }
+});
+
+//Ordenar recetas por campo (ascendente/descendente)
+app.get('/recetas/ordenar/:campo', (req, res) => {
+    try {
+        const campo = req.params.campo;
+        const orden = req.query.orden || 'asc'; // asc o desc
+        
+        if (!['nombre', 'descripcion', 'dificultad', 'tiempo', 'raciones', 'ingredientes', 'pasos'].includes(campo)) {
+            return res.status(400).json({ 
+                error: "Campo inválido",
+                camposValidos: ['nombre', 'descripcion', 'dificultad', 'tiempo', 'raciones', 'ingredientes', 'pasos']
+            });
+        }
+        
+        const resultados = [...recetas].sort((a, b) => {
+            if (orden === 'desc') {
+                return a[campo] > b[campo] ? -1 : 1;
+            }
+            return a[campo] > b[campo] ? 1 : -1;
+        });
+        
+        res.status(200).json({
+            ordenado_por: campo,
+            orden: orden,
+            total: resultados.length,
+            recetas: resultados
+        });
+    } catch (error) {
+        res.status(500).json({ error: "Error al ordenar las recetas" });
+    }
+});
