@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Recetas - API</title>
+    <script src="index.js"></script>
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div class="container">
+        <h1>🍳 Gestor de Recetas</h1>
+
+        <div class="tabs">
+            <button class="tab active" onclick="cambiarTab('recetas')">📖 Recetas</button>
+            <button class="tab" onclick="cambiarTab('origen')">🌍 Origen</button>
+            <button class="tab" onclick="cambiarTab('estadisticas')">📊 Estadísticas</button>
+        </div>
+
+        <!-- TAB RECETAS -->
+        <div id="recetas" class="tab-content active">
+            <div class="filters">
+                <h3>🔍 Filtros y Búsqueda</h3>
+                <div class="filter-group">
+                    <input type="text" id="filtroNombre" placeholder="Buscar por nombre...">
+                    <select id="filtroDificultad">
+                        <option value="">Todas las dificultades</option>
+                        <option value="fácil">Fácil</option>
+                        <option value="media">Media</option>
+                        <option value="difícil">Difícil</option>
+                    </select>
+                    <input type="number" id="filtroTiempoMin" placeholder="Tiempo mínimo (min)">
+                    <input type="number" id="filtroTiempoMax" placeholder="Tiempo máximo (min)">
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="aplicarFiltros()">Aplicar Filtros</button>
+                    <button class="btn btn-warning" onclick="limpiarFiltros()">Limpiar</button>
+                    <button class="btn btn-success" onclick="abrirModalCrear()">➕ Nueva Receta</button>
+                </div>
+            </div>
+
+            <div id="mensajeRecetas"></div>
+            <div id="listaRecetas" class="recetas-grid"></div>
+        </div>
+
+        <!-- TAB ORIGEN -->
+        <div id="origen" class="tab-content">
+            <h2>🌍 Origen de Recetas</h2>
+            <button class="btn btn-success" onclick="abrirModalOrigenCrear()" style="margin: 20px 0;">➕ Nuevo Origen</button>
+            <div id="mensajeOrigen"></div>
+            <div id="listaOrigen" class="recetas-grid"></div>
+        </div>
+
+        <!-- TAB ESTADÍSTICAS -->
+        <div id="estadisticas" class="tab-content">
+            <h2>📊 Estadísticas</h2>
+            <div id="statsContainer" class="stats-container"></div>
+            <div id="chartContainer" class="chart-container"></div>
+        </div>
+    </div>
+
+    <!-- MODAL CREAR/EDITAR RECETA -->
+    <div id="modalReceta" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitulo">Nueva Receta</h2>
+                <button class="close-modal" onclick="cerrarModal('modalReceta')">×</button>
+            </div>
+            <form id="formReceta" onsubmit="guardarReceta(event)">
+                <input type="hidden" id="recetaId">
+                
+                <div class="form-group">
+                    <label>Nombre *</label>
+                    <input type="text" id="recetaNombre" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Descripción *</label>
+                    <textarea id="recetaDescripcion" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Dificultad *</label>
+                    <select id="recetaDificultad" required>
+                        <option value="">Seleccionar...</option>
+                        <option value="fácil">Fácil</option>
+                        <option value="media">Media</option>
+                        <option value="difícil">Difícil</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Tiempo (minutos) *</label>
+                    <input type="number" id="recetaTiempo" required min="1">
+                </div>
+
+                <div class="form-group">
+                    <label>Raciones *</label>
+                    <input type="number" id="recetaRaciones" required min="1">
+                </div>
+
+                <div class="form-group">
+                    <label>Ingredientes (separados por coma) *</label>
+                    <textarea id="recetaIngredientes" required placeholder="patatas, huevos, cebolla..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Pasos (separados por punto y coma) *</label>
+                    <textarea id="recetaPasos" required placeholder="Paso 1; Paso 2; Paso 3"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-success" style="width: 100%;">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL CREAR ORIGEN -->
+    <div id="modalOrigen" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Nuevo Origen</h2>
+                <button class="close-modal" onclick="cerrarModal('modalOrigen')">×</button>
+            </div>
+            <form id="formOrigen" onsubmit="guardarOrigen(event)">
+                <div class="form-group">
+                    <label>¿Es autóctono? *</label>
+                    <select id="origenAutoctono" required>
+                        <option value="">Seleccionar...</option>
+                        <option value="true">Sí</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success" style="width: 100%;">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

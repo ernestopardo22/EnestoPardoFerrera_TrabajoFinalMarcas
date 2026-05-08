@@ -1,7 +1,9 @@
 const express = require("express");
+const cors = require("cors"); //Permite conectar la API con una interfaz gráfica
 const app = express();
 const port = 5008;
 
+app.use(cors());
 app.use(express.json());
 app.listen(port, () => 
     console.log("Servidor de Ernesto abierto")
@@ -22,7 +24,7 @@ let recetas = [
       "id": "2",
       "nombre": "Paella Valenciana",
       "descripcion": "Arroz caldoso con pollo, conejo y verduras",
-      "dificultad": "difícil",
+      "dificultad": "dificil",
       "tiempo": 75,
       "raciones": 6,
       "ingredientes": ["arroz bomba", "pollo", "conejo", "judías verdes", "garrofón", "tomate", "azafrán", "aceite de oliva", "agua"],
@@ -32,7 +34,7 @@ let recetas = [
       "id": "3",
       "nombre": "Gazpacho Andaluz",
       "descripcion": "Sopa fría de tomate ideal para verano",
-      "dificultad": "fácil",
+      "dificultad": "facil",
       "tiempo": 15,
       "raciones": 4,
       "ingredientes": ["tomates maduros", "pepino", "pimiento verde", "ajo", "pan duro", "aceite de oliva", "vinagre", "sal"],
@@ -62,7 +64,7 @@ let recetas = [
       "id": "6",
       "nombre": "Ensalada César",
       "descripcion": "Ensalada fresca con pollo crujiente y salsa César",
-      "dificultad": "fácil",
+      "dificultad": "facil",
       "tiempo": 20,
       "raciones": 2,
       "ingredientes": ["lechuga romana", "pechuga de pollo", "queso parmesano", "crutones", "anchoas", "yema de huevo", "mostaza", "aceite de oliva", "limón"],
@@ -72,7 +74,7 @@ let recetas = [
       "id": "7",
       "nombre": "Crema de Calabaza",
       "descripcion": "Crema suave y reconfortante de calabaza asada",
-      "dificultad": "fácil",
+      "dificultad": "facil",
       "tiempo": 35,
       "raciones": 4,
       "ingredientes": ["calabaza", "cebolla", "puerro", "patata", "zanahoria", "caldo de verduras", "nata", "aceite de oliva"],
@@ -189,7 +191,7 @@ app.put("/actualizar-receta", (req,res) => {
     recetas[req.body.id-1].ingredientes = req.body.ingredientes;
     recetas[req.body.id-1].pasos = req.body.pasos;
 
-    return res.json(recetas[req.body.id-1])
+    return res.status(201).json(recetas[req.body.id-1])
 })
 
 app.delete("/borrar-receta", (req,res) => {
