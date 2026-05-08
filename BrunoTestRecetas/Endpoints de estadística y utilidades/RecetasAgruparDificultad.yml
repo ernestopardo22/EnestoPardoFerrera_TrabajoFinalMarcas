@@ -1,0 +1,15 @@
+info:
+  name: RecetasAgruparDificultad
+  type: http
+  seq: 4
+
+http:
+  method: GET
+  url: http://localhost:5008/recetas/agrupar/dificultad
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -1,0 +1,25 @@
+info:
+  name: ActualizarReceta
+  type: http
+  seq: 1
+
+http:
+  method: PUT
+  url: http://localhost:5008/actualizar-receta
+  body:
+    type: json
+    data: |-
+      {
+        "id": "1",
+        "descripcion": "Tarta de queso cremosa estilo La Viña",
+        "dificultad": "fácil",
+        "tiempo": 5000,
+        "raciones": 6
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

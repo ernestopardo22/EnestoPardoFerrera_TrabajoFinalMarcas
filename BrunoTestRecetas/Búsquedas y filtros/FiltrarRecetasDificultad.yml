@@ -1,0 +1,22 @@
+info:
+  name: FiltrarRecetasDificultad
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: http://localhost:5008/recetas/filtrar/dificultad?dificultad=media
+  params:
+    - name: dificultad
+      value: media
+      type: query
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

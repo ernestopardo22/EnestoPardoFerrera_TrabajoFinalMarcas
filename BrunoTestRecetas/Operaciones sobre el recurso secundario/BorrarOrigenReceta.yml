@@ -1,0 +1,22 @@
+info:
+  name: BorrarOrigenReceta
+  type: http
+  seq: 1
+
+http:
+  method: DELETE
+  url: http://localhost:5008/borrar-origen-receta
+  body:
+    type: json
+    data: |-
+      {
+            "id": "4",
+            "autoctono": true
+          }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

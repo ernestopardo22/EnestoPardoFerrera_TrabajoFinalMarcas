@@ -1,0 +1,28 @@
+info:
+  name: GuardarReceta
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:5008/guardar-receta
+  body:
+    type: json
+    data: |-
+      {
+            "id": "rec_10",
+            "nombre": "Tarta de Queso",
+            "descripcion": "Tarta de queso cremosa estilo La Viña",
+            "dificultad": "media",
+            "tiempo": 70,
+            "raciones": 8,
+            "ingredientes": ["queso crema", "huevos", "azúcar", "nata líquida", "harina", "mantequilla", "galletas", "esencia de vainilla"],
+            "pasos": ["Triturar galletas y mezclar con mantequilla derretida para la base", "Forzar el molde con la mezcla", "Batir el queso con el azúcar", "Incorporar huevos uno a uno", "Añadir nata, harina y vainilla", "Hornear a 200°C durante 40 minutos"]
+          }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
