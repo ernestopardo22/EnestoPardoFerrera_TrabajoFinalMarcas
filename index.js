@@ -368,7 +368,7 @@ app.get('/recetas/estadisticas/tiempos', (req, res) => {
 //Obtener las N recetas con más raciones o menos raciones de la misma dificultad
 app.get('/recetas/top/:cantidad', (req, res) => {
     try {
-        const cantidad = req.params.cantidad; // 'caros' o 'baratos'
+        const cantidad = req.params.cantidad; // 'contundentes' o 'escasos'
         const n = parseInt(req.query.n) || 3;
         
         if (!['contundentes', 'escasos'].includes(cantidad)) {
